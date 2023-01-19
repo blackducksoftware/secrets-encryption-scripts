@@ -13,6 +13,11 @@
 ##
 
 PREVIOUS=${1:-./prev_seed}
+ 
+if [ ! -f ""$PREVIOUS"" ]; then
+    echo "Previous seed file, $PREVIOUS, must exist"
+    exit 1
+fi
 
 openssl rand -hex 1024 > root_seed
 
@@ -32,5 +37,5 @@ echo "Copy the following files to a secure"
 echo "location and delete them from this system"
 echo ""
 echo "root_seed   -- this file is the NEW core secret stored in k8s"
-echo "prev_seed   -- this file is the PREVIOUS core secret"
+echo "$PREVIOUS   -- this file is the PREVIOUS core secret"
 echo ""

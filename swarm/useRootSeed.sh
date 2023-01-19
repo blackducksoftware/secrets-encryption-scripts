@@ -6,9 +6,14 @@
 ## system whose root seed was lost or leaked
 ##
 
-FILENAME=$1
+FILENAME=${1:-""}
 
-echo "Importing the file as the root seed"
+if [ ! -f "$FILENAME" ]; then
+    echo "New root seed file, $FILENAME, must exist"
+    exit 1
+fi
 
-docker secret rm crypto-root-seed > /dev/nullr
+echo "Importing the file, $FILENAME, as the root seed"
+
+docker secret rm crypto-root-seed > /dev/null
 docker secret create crypto-root-seed $FILENAME > /dev/null
