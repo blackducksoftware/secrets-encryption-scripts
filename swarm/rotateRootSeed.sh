@@ -3,7 +3,15 @@
 ##
 ## This script is an example of how a root seed can be rotated while the system is online and operating without service disruption
 ##
-## This script stores a passed in file as a previous seed. It then generates a new root seed and configures that.
+## This script stores a passed in file as a previous seed. It then generates a new root seed and configures that. The previous root
+## seed can be gotten using the extractRootAsPreviousSeed script.
+##
+## Note: the ordering of steps is the following to do a rotation of the root seed:
+##
+## 1. With the Swarm stack running execute extractRootSeedAsPreviousSeed.sh
+## 2. Stop the stack
+## 3. Execute the rotateRootSeed.sh (this one) script
+## 4. Restart/redeploy the stack
 ##
 ## The new root seed file needs to be securely stored so that the system can be restored from backup with the correct root
 ## seed
@@ -14,7 +22,7 @@
 
 PREVIOUS=${1:-./prev_seed}
  
-if [ ! -f ""$PREVIOUS"" ]; then
+if [ ! -f "$PREVIOUS" ]; then
     echo "Previous seed file, $PREVIOUS, must exist"
     exit 1
 fi
